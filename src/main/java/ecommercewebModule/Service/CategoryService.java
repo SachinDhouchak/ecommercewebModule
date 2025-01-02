@@ -1,23 +1,15 @@
 package ecommercewebModule.Service;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import ecommercewebModule.Entities.Category;
-import ecommercewebModule.Repository.CategoryRepository;
 
-@Service
-public class CategoryService {
-	
-	@Autowired
-	CategoryRepository categoryRepository;
 
-	public List<Category> getAllCategory() {
-		return categoryRepository.findAll();
-	}
+public interface CategoryService {
 	
-	
+	public List<Category> getAllCategory();
+
+	public Optional<Category> getSingleCategory(Integer categoryId);
 	
 }

@@ -26,7 +26,7 @@ public class Product {
 //	private String imageUrl;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="combine_col_inPro",referencedColumnName="category_id",nullable=false)
+	@JoinColumn(name="cat_id",referencedColumnName="category_id",nullable=false)
 	private Category category;
 
 	public long getProduct_id() {
