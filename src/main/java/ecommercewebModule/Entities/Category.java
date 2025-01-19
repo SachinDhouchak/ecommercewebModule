@@ -24,7 +24,7 @@ public class Category {
 	@Column(length=20)
 	private String description;	
 	
-	@OneToMany(mappedBy="category",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="category",fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private List<Product> products;
 	
 //	private String imageUrl;

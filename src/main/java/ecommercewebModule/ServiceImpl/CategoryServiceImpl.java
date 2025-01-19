@@ -25,13 +25,36 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public void addCategory(Category category) {
-		 categoryRepository.save(category);		
+	public Boolean addCategory(Category category) {
+		 try {
+			 categoryRepository.save(category);
+			 return true;
+		} catch (Exception e) {
+			return false;
+		}		
 	}
 
 	@Override
-	public Category updateCategory(Category category) {		
-		return categoryRepository.save(category);
+	public Boolean updateCategory(Integer categoryId, Category category) {		
+		Optional<Category> isCategoryExist = categoryRepository.findById(categoryId);
+		   if (isCategoryExist.isPresent()) {
+			    Category existedData = isCategoryExist.get();
+			    existedData.setCategory_id(category.getCategory_id());
+			    existedData.setCategory_name(category.getCategory_name());
+			    existedData.setDescription(category.getDescription());
+			    existedData.setProducts(category.getProducts());
+			    
+			  try {
+				  categoryRepository.save(existedData);
+				  return true;
+			} catch (Exception e) {
+				return false;
+			}
+		} else {
+			return false;
+		}
+		
+		 
 	}
 
 	@Override

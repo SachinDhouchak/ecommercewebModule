@@ -25,7 +25,7 @@ public class Product {
 	
 //	private String imageUrl;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="cat_id",referencedColumnName="category_id",nullable=false)
 	private Category category;
 
