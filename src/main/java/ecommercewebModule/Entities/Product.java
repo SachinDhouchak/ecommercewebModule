@@ -2,13 +2,9 @@ package ecommercewebModule.Entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 @Entity
 public class Product {
 
@@ -22,12 +18,7 @@ public class Product {
 	private double price;
 	
 	private String description;
-	
-//	private String imageUrl;
-	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="cat_id",referencedColumnName="category_id",nullable=false)
-	private Category category;
+		
 
 	public long getProduct_id() {
 		return product_id;
@@ -61,25 +52,4 @@ public class Product {
 		this.description = description;
 	}
 
-//	public String getImageUrl() {
-//		return imageUrl;
-//	}
-//
-//	public void setImageUrl(String imageUrl) {
-//		this.imageUrl = imageUrl;
-//	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-	
-	
-	
-	
-	
-	
 }

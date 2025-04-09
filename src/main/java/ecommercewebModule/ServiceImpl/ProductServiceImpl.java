@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.DeleteMapping;
 
 import ecommercewebModule.Entities.Product;
 import ecommercewebModule.Repository.ProductRepository;
@@ -54,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
 					existingProduct.setName(updatedProduct.getName());
 					existingProduct.setPrice(updatedProduct.getPrice());
 					existingProduct.setDescription(updatedProduct.getDescription());
-					existingProduct.setCategory(updatedProduct.getCategory());
+					
 					
 						try {
 							productRepository.save(existingProduct);

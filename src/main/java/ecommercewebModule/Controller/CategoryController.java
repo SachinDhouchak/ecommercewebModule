@@ -27,6 +27,11 @@ public class CategoryController {
 	@Autowired
 	CategoryService categoryService;
 
+	@GetMapping("/getCategoryName")
+	public String getCategoryNameById(@RequestParam("categoryId") int categoryId) {
+		return categoryService.getCategoryNameById(categoryId);
+	}
+
 	@GetMapping("/getAllCategories")
 	public ResponseEntity<?> getAllCategories() {
 		try {

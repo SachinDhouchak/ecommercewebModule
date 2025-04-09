@@ -1,17 +1,26 @@
 package ecommercewebModule.Entities;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 
 @Entity
+@NamedStoredProcedureQueries(
+	@NamedStoredProcedureQuery(
+		name = "categoryProcedure",
+		procedureName = "firstProcedure",
+		parameters = {
+			@StoredProcedureParameter(mode = ParameterMode.IN,type = Integer.class,name = "id"),
+			@StoredProcedureParameter(mode = ParameterMode.OUT,type = String.class, name="fetchedCategoryName")
+		}
+	)
+)
 public class Category {
 
 	@Id
@@ -24,11 +33,6 @@ public class Category {
 	@Column(length=20)
 	private String description;	
 	
-	@OneToMany(mappedBy="category",fetch=FetchType.EAGER,cascade=CascadeType.ALL)
-	private List<Product> products;
-	
-//	private String imageUrl;
-
 	
 	public String getCategory_name() {
 		return category_name;
@@ -57,23 +61,6 @@ public class Category {
 		this.description = description;
 	}
 
-	public List<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
-
-	
-
-//	public String getImageUrl() {
-//		return imageUrl;
-//	}
-//
-//	public void setImageUrl(String imageUrl) {
-//		this.imageUrl = imageUrl;
-//	}	
 	
 	
 	

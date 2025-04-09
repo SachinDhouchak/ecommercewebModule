@@ -7,6 +7,8 @@ import ecommercewebModule.Entities.Category;
 
 
 public interface CategoryService {
+
+	public String getCategoryNameById(int categoryId);
 	
 	public List<Category> getAllCategory();
 

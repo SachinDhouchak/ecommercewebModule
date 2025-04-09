@@ -15,6 +15,13 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Autowired
 	CategoryRepository categoryRepository;
+
+
+
+    @Override
+    public String getCategoryNameById(int categoryId) {
+       return categoryRepository.getCategoryNameById(categoryId);
+	}
 	
 	@Override
 	public List<Category> getAllCategory() {return categoryRepository.findAll(); }
@@ -42,7 +49,6 @@ public class CategoryServiceImpl implements CategoryService {
 			    existedData.setCategory_id(category.getCategory_id());
 			    existedData.setCategory_name(category.getCategory_name());
 			    existedData.setDescription(category.getDescription());
-			    existedData.setProducts(category.getProducts());
 			    
 			  try {
 				  categoryRepository.save(existedData);
