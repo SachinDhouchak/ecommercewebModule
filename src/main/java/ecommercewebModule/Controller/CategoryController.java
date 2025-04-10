@@ -3,6 +3,7 @@ package ecommercewebModule.Controller;
 import java.util.List;
 import java.util.Optional;
 
+import ecommercewebModule.CustomException.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,16 +48,25 @@ public class CategoryController {
 					.body(errorMsg);
 		}
 	}
-	
-	
+
+
 	@GetMapping("/getCategory")
-	public ResponseEntity<?> getSingleCategory(@RequestParam("categoryid") Integer categoryId) {
-		Optional<Category> category = categoryService.getSingleCategory(categoryId);
-		if (!category.isPresent()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Data not found in single category");
-		}
+	public ResponseEntity<?> getSingleCategory(@RequestParam("categoryId") Integer categoryId) {
+		Category category = categoryService.getSingleCategory(categoryId).orElseThrow(
+				()-> new ResourceNotFoundException("Data with id " + categoryId + " is not found")
+		);
 		return ResponseEntity.ok(category);
 	}
+	
+	
+//	@GetMapping("/getCategory")
+//	public ResponseEntity<?> getSingleCategory(@RequestParam("categoryid") Integer categoryId) {
+//		Optional<Category> category = categoryService.getSingleCategory(categoryId);
+//		if (!category.isPresent()) {
+//			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Data not found in single category");
+//		}
+//		return ResponseEntity.ok(category);
+//	}
 	
 	// @RequestBody or ModelAttribute
 	@PostMapping("/addCategory")
