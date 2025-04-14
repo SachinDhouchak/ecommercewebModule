@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import ecommercewebModule.CustomException.ResourceNotFoundException;
+import ecommercewebModule.CustomException.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +51,15 @@ public class CategoryController {
 	}
 
 
+	@GetMapping("/getCategoryId")
+	public ResponseEntity<?> getSingleCategoryId(@RequestParam("categoryId") Integer categoryId) {
+		Category category = categoryService.getSingleCategory(categoryId).orElseThrow(
+				()-> new ServerException("Something went wrong while fetching all the data")
+		);
+		return ResponseEntity.ok(category);
+	}
+
+
 	@GetMapping("/getCategory")
 	public ResponseEntity<?> getSingleCategory(@RequestParam("categoryId") Integer categoryId) {
 		Category category = categoryService.getSingleCategory(categoryId).orElseThrow(
@@ -57,16 +67,7 @@ public class CategoryController {
 		);
 		return ResponseEntity.ok(category);
 	}
-	
-	
-//	@GetMapping("/getCategory")
-//	public ResponseEntity<?> getSingleCategory(@RequestParam("categoryid") Integer categoryId) {
-//		Optional<Category> category = categoryService.getSingleCategory(categoryId);
-//		if (!category.isPresent()) {
-//			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Data not found in single category");
-//		}
-//		return ResponseEntity.ok(category);
-//	}
+
 	
 	// @RequestBody or ModelAttribute
 	@PostMapping("/addCategory")
@@ -84,10 +85,9 @@ public class CategoryController {
 		}		
 	}
 	
-	
-	// @RequestBody or ModelAttribute
+
 	@PostMapping("/updateCategory")
-	public ResponseEntity<?> updateCategory(@RequestParam("id") Integer categoryId, @ModelAttribute("updatedCategoryData") Category category  ) {
+	public ResponseEntity<?> updateCategory(@RequestParam("categoryId") Integer categoryId, @RequestBody Category category  ) {
 		if (categoryId == null ) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category is not found");
 		}else {
