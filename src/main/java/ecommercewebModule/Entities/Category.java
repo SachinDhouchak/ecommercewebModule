@@ -1,5 +1,8 @@
 package ecommercewebModule.Entities;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +12,11 @@ import javax.persistence.NamedStoredProcedureQueries;
 import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureParameter;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @NamedStoredProcedureQueries(
 	@NamedStoredProcedureQuery(
@@ -27,10 +34,12 @@ public class Category {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="category_id")
 	private int category_id;
-	
+
+	@NotBlank(message = "category should not be blank")
 	private String category_name;
 	
-	@Column(length=20)
+	@Column(length=30)
+	@Size(max = 30,message = "description length should not be more than 20 characters")
 	private String description;	
 	
 	

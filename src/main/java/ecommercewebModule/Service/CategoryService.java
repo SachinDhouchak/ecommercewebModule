@@ -5,8 +5,13 @@ import java.util.Optional;
 
 import ecommercewebModule.Entities.Category;
 
+import javax.transaction.Transactional;
+
 
 public interface CategoryService {
+
+	@Transactional
+	public  String addAndDeleteCategory();
 
 	public String getCategoryNameById(int categoryId);
 	

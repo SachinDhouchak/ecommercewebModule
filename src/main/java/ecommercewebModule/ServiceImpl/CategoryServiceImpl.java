@@ -3,12 +3,17 @@ package ecommercewebModule.ServiceImpl;
 import java.util.List;
 import java.util.Optional;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+import ecommercewebModule.CustomException.ServerException;
+import ecommercewebModule.Repository.ProductRepository;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ecommercewebModule.Entities.Category;
 import ecommercewebModule.Repository.CategoryRepository;
 import ecommercewebModule.Service.CategoryService;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -16,9 +21,27 @@ public class CategoryServiceImpl implements CategoryService {
 	@Autowired
 	CategoryRepository categoryRepository;
 
+	@Autowired
+	ProductRepository productRepository;
 
 
-    @Override
+	@Override
+	@Transactional
+	public String addAndDeleteCategory() throws ServerException {
+		try {
+			categoryRepository.save(new Category(0,"flyingVehicles","Air vehcile"));
+			deleteProduct();
+			return "transaction is done";
+		} catch (Exception ex) {
+           throw new ServerException("Transaction failed " + ex.getMessage());
+		}
+	}
+
+	public void deleteProduct() {
+		productRepository.deleteById(36);
+	}
+
+	@Override
     public String getCategoryNameById(int categoryId) {
        return categoryRepository.getCategoryNameById(categoryId);
 	}

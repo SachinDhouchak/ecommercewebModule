@@ -7,9 +7,13 @@ import org.springframework.stereotype.Repository;
 
 import ecommercewebModule.Entities.Category;
 
+import javax.transaction.Transactional;
+
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer>  {
 
 	@Procedure(name = "categoryProcedure")
 	public String getCategoryNameById(@Param("id")int categoryId);
+
+
 }

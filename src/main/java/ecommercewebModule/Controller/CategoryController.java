@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,12 +24,19 @@ import org.springframework.web.bind.annotation.RestController;
 import ecommercewebModule.Entities.Category;
 import ecommercewebModule.Service.CategoryService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/Category")
 public class CategoryController {
 
 	@Autowired
 	CategoryService categoryService;
+
+	@GetMapping("addAndDelete")
+	public ResponseEntity<String> addAndDeleteCategory() {
+		return ResponseEntity.ok().body(categoryService.addAndDeleteCategory());
+	}
 
 	@GetMapping("/getCategoryName")
 	public String getCategoryNameById(@RequestParam("categoryId") int categoryId) {
@@ -71,7 +80,16 @@ public class CategoryController {
 	
 	// @RequestBody or ModelAttribute
 	@PostMapping("/addCategory")
-	public ResponseEntity<String> addCategory(@RequestBody Category category) {		
+	public ResponseEntity<String> addCategory(@Valid @RequestBody Category category, BindingResult bindingResult) {
+
+		if (bindingResult.hasErrors()) {
+			StringBuilder validaionErrors = new StringBuilder();
+			 for (FieldError fieldError : bindingResult.getFieldErrors()) {
+				 validaionErrors.append(fieldError.getField()).append(" : ").append(fieldError.getDefaultMessage()).append(" , ");
+			 }
+			 return ResponseEntity.badRequest().body(validaionErrors.toString());
+		}
+
 		try {
 			Boolean isCategoryAdded = categoryService.addCategory(category);
 			    if (isCategoryAdded) {
