@@ -93,7 +93,7 @@ public class CategoryController {
 		try {
 			List<Category> categories = categoryService.getAllCategory();
 			if (!CollectionUtils.isEmpty(categories)) {
-				return ResponseEntity.ok(categories.stream()
+				return ResponseEntity.ok().body(categories.stream()
 						.collect(Collectors.toMap(
 								Category::getCategory_name,
 								category -> category,
@@ -101,6 +101,32 @@ public class CategoryController {
 								)));
 			} else {
                 return ResponseEntity.ok("Data is empty");
+			}
+		} catch (Exception e) {
+			String errorMsg = "Something went wrong" + e.getMessage();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(errorMsg);
+		}
+	}
+
+
+	@GetMapping("/getAllCategoriesByComparator")
+	public ResponseEntity<?> getAllCategoriesByComparator() {
+		try {
+			List<Category> categories = categoryService.getAllCategory();
+			Collections.sort(categories, new CategoryNameComparator());
+			if (!CollectionUtils.isEmpty(categories)) {
+				return ResponseEntity.ok().
+						body(categories.stream().collect(
+								Collectors.toMap(
+										Category::getCategory_id,
+										category -> category,
+										(existingCategory, updatedCategory) -> existingCategory,
+										LinkedHashMap::new
+								)
+						));
+			} else {
+				return ResponseEntity.ok("Data is empty");
 			}
 		} catch (Exception e) {
 			String errorMsg = "Something went wrong" + e.getMessage();
