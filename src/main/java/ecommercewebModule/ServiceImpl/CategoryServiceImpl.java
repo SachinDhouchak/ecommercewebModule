@@ -1,10 +1,12 @@
 package ecommercewebModule.ServiceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
 import ecommercewebModule.CustomException.ServerException;
+import ecommercewebModule.Entities.CategoryBulk;
 import ecommercewebModule.Repository.ProductRepository;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,27 @@ public class CategoryServiceImpl implements CategoryService {
 	@Autowired
 	ProductRepository productRepository;
 
+
+	@Override
+	public String addBulkData(CategoryBulk categoryBulk) {
+		ArrayList<Category> categoryList = new ArrayList<>();
+
+		categoryBulk.getCategoryBulkList().forEach(
+				eachCategory -> {
+					Category category = new Category();
+					category.setCategory_name( eachCategory.getCategory_name() );
+					category.setDescription( eachCategory.getDescription() );
+					categoryList.add(category);
+				}
+		);
+
+		try {
+			categoryRepository.saveAll(categoryList);
+			return "Bulk Category data is inserted";
+		}catch (Exception ex) {
+			return "Something went wrong due to : "+ ex.getMessage();
+		}
+	}
 
 	@Override
 	@Transactional
@@ -53,6 +76,19 @@ public class CategoryServiceImpl implements CategoryService {
 	public Optional<Category> getSingleCategory(Integer categoryId) {
 		return categoryRepository.findById(categoryId);
 	}
+
+
+	public Optional<Category> getSingleCategory2(Integer categoryId) {
+		return categoryRepository.findById(categoryId)
+				.map(category -> Category.builder()
+						.category_id(category.getCategory_id())
+						.category_name(category.getCategory_name())
+						.description(category.getDescription())
+						.build()
+				);
+	}
+
+
 
 	@Override
 	public Boolean addCategory(Category category) {

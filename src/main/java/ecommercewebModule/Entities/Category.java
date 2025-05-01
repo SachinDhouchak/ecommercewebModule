@@ -1,7 +1,6 @@
 package ecommercewebModule.Entities;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,9 +13,13 @@ import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureParameter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Comparator;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@Builder
 @Entity
 @NamedStoredProcedureQueries(
 	@NamedStoredProcedureQuery(
@@ -28,7 +31,7 @@ import javax.validation.constraints.Size;
 		}
 	)
 )
-public class Category {
+public class Category  {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -40,38 +43,7 @@ public class Category {
 	
 	@Column(length=30)
 	@Size(max = 30,message = "description length should not be more than 20 characters")
-	private String description;	
-	
-	
-	public String getCategory_name() {
-		return category_name;
-	}
+	private String description;
 
 
-	public int getCategory_id() {
-		return category_id;
-	}
-
-
-	public void setCategory_id(int category_id) {
-		this.category_id = category_id;
-	}
-
-
-	public void setCategory_name(String category_name) {
-		this.category_name = category_name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	
-	
-	
-	
 }
