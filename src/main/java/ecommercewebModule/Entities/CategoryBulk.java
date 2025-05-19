@@ -8,5 +8,5 @@ import java.util.List;
 @Setter
 public class CategoryBulk {
 
-    public List<Category> categoryBulkList;
+    public List<Category> categoryBulkList;     // nothing
 }

@@ -42,7 +42,7 @@ public class Category  {
 	private String category_name;
 	
 	@Column(length=30)
-	@Size(max = 30,message = "description length should not be more than 20 characters")
+	@Size(max = 30,message = "description length shouldn't be more than 20 characters")
 	private String description;
 
 

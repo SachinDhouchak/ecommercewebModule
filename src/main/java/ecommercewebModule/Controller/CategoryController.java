@@ -52,7 +52,7 @@ public class CategoryController {
 
 	@PostMapping("/addCategoryBatch")
 	public ResponseEntity<?> insertDataThroughBatch() {
-		JobParameters jobParameters = new JobParametersBuilder()
+		JobParameters jobParameters = new JobParametersBuilder()          // nothing
 				.addLong("startAt",System.currentTimeMillis()).toJobParameters();
 
         try {
@@ -68,7 +68,7 @@ public class CategoryController {
 
 	@PostMapping("/addBulkCategory")
 	public ResponseEntity<String> addBulkData(@RequestBody @Valid CategoryBulk categoryBulk, BindingResult bindingResult) {
-		StringBuilder errors = new StringBuilder();
+		StringBuilder errors = new StringBuilder();           // nothing
 		if (bindingResult.hasErrors()) {
 			FieldError fieldError = bindingResult.getFieldError();
 			errors.append(fieldError.getField()).append(" : ").append(fieldError.getDefaultMessage()).append(" , ");
@@ -114,7 +114,7 @@ public class CategoryController {
 	public ResponseEntity<?> getAllCategoriesByComparator() {
 		try {
 			List<Category> categories = categoryService.getAllCategory();
-			Collections.sort(categories, new CategoryNameComparator());
+			Collections.sort(categories, new CategoryNameComparator());      // comparator automatically compare it
 			if (!CollectionUtils.isEmpty(categories)) {
 				return ResponseEntity.ok().
 						body(categories.stream().collect(
@@ -158,7 +158,7 @@ public class CategoryController {
 	@GetMapping("/getCategory2")
 	public ResponseEntity<?> getSingleCategory2(@RequestParam("categoryId") Integer categoryId) {
 		Category category = categoryService.getSingleCategory(categoryId).orElseThrow(
-				()-> new ResourceNotFoundException("Data with id " + categoryId + " is not found")
+				()-> new ResourceNotFoundException("Data with id " + categoryId + " is not found")     // nothing
 		);
 		return ResponseEntity.ok(category);
 	}
@@ -182,7 +182,7 @@ public class CategoryController {
 			Boolean isCategoryAdded = categoryService.addCategory(category);
 			System.out.println("after adding category class data");
 			    if (isCategoryAdded) {
-			    	return ResponseEntity.ok("New Category added");
+			    	return ResponseEntity.ok("New Category added");      // nothing
 				} else {
 					return ResponseEntity.badRequest().body("Category could not be added");
 				}

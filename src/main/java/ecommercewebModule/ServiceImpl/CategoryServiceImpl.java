@@ -29,7 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public String addBulkData(CategoryBulk categoryBulk) {
-		ArrayList<Category> categoryList = new ArrayList<>();
+		ArrayList<Category> categoryList = new ArrayList<>();   // nothing
 
 		categoryBulk.getCategoryBulkList().forEach(
 				eachCategory -> {
@@ -79,7 +79,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 
 	public Optional<Category> getSingleCategory2(Integer categoryId) {
-		return categoryRepository.findById(categoryId)
+		return categoryRepository.findById(categoryId)               // nothing
 				.map(category -> Category.builder()
 						.category_id(category.getCategory_id())
 						.category_name(category.getCategory_name())
